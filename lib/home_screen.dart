@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kalkulator_sehat/calculator_screen.dart';
 
 var primaryColor = Color(0xFF6C63FF);
 var primaryButtonColor = Color(0xB36C63FF);
@@ -81,7 +82,11 @@ class HomeScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(right: 24.0, left: 24.0, bottom: 24.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return CalculatorScreen();
+                  }));
+                },
                 style: ElevatedButton.styleFrom(
                     primary: primaryButtonColor,
                     padding: EdgeInsets.all(12.0),

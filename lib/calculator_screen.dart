@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kalkulator_sehat/summary_screen.dart';
 
 var primaryColor = Color(0xFF6C63FF);
 var secondaryColor = Color(0x336C63FF);
@@ -143,7 +144,12 @@ class CalculatorScreen extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.0),
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return SummaryScreen();
+                          }));
+                        },
                         style: ElevatedButton.styleFrom(
                             primary: primaryButtonColor,
                             padding: EdgeInsets.all(12.0),

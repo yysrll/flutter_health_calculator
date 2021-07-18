@@ -12,17 +12,14 @@ var isVisible;
 var result;
 bool _isMale = true;
 String dropdownValue = '1.2';
-final weightInput = TextEditingController(text: '0');
-final heightInput = TextEditingController(text: '0');
-final ageInput = TextEditingController(text: '0');
-var weight = int.parse(weightInput.text);
-var height = int.parse(heightInput.text);
-var age = int.parse(ageInput.text);
+TextEditingController weightInput = TextEditingController(text: '0');
+TextEditingController heightInput = TextEditingController(text: '0');
+TextEditingController ageInput = TextEditingController(text: '0');
 
 // var isMale = true;
 class ResultData {
-  final int code;
-  final double result;
+  int code;
+  double result;
   ResultData(this.code, this.result);
 }
 
@@ -123,6 +120,9 @@ class CalculatorScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 8.0),
                     child: ElevatedButton(
                         onPressed: () {
+                          var weight = int.parse(weightInput.text);
+                          var height = int.parse(heightInput.text);
+                          var age = int.parse(ageInput.text);
                           if (code == 1) {
                             var heightSquare = (height / 100) * (height / 100);
                             result = weight / heightSquare;

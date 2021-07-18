@@ -5,7 +5,11 @@ import 'package:kalkulator_sehat/calculator_screen.dart';
 var primaryColor = Color(0xFF6C63FF);
 var primaryButtonColor = Color(0xB36C63FF);
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
+  
+  var code;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +58,12 @@ class HomeScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(24),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CalculatorScreen(code = 0)));
+                },
                 style: ElevatedButton.styleFrom(
                     primary: primaryButtonColor,
                     padding: EdgeInsets.all(12.0),
@@ -83,9 +92,10 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.only(right: 24.0, left: 24.0, bottom: 24.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return CalculatorScreen();
-                  }));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CalculatorScreen(code = 1)));
                 },
                 style: ElevatedButton.styleFrom(
                     primary: primaryButtonColor,

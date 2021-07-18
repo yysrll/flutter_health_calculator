@@ -6,9 +6,29 @@ var primaryColor = Color(0xFF6C63FF);
 var secondaryColor = Color(0x336C63FF);
 var primaryButtonColor = Color(0xB36C63FF);
 
+var title;
+var description;
+var isVisible;
+// var isMale = true;
+
 class CalculatorScreen extends StatelessWidget {
+  final int code;
+  CalculatorScreen(this.code);
+
   @override
   Widget build(BuildContext context) {
+    if (code == 0) {
+      title = 'Calorie ';
+      description =
+          'A calorie calculator is a tool used to find out how many calories a person needs. The calculation results can be used as a reference to control calorie intake per day.';
+      isVisible = true;
+    } else {
+      title = 'BMI ';
+      description =
+          'The BMI calculator can provide information whether your weight is ideal or normal, underweight, overweight, or obese. Calculate Body Mass Index (BM) or Body Mass Index (BMI) simply by entering height and weight data.';
+      isVisible = false;
+    }
+
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
@@ -17,7 +37,7 @@ class CalculatorScreen extends StatelessWidget {
           title: Row(
             children: <Widget>[
               Text(
-                'BMI ',
+                title,
                 style: TextStyle(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
@@ -38,72 +58,9 @@ class CalculatorScreen extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(bottom: 30.0),
-                  child: Text(
-                      'A calorie calculator is a tool used to find out how many calories a person needs. The calculation results can be used as a reference to control calorie intake per day.'),
+                  child: Text(description),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(right: 12.0),
-                          child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  primary: primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(24.0))),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 24.0),
-                                child: Image.asset(
-                                  'images/ic_man.png',
-                                  height: 100.0,
-                                ),
-                              )),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Male',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ))
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 12.0),
-                          child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  primary: secondaryColor,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(24.0))),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 24.0),
-                                child: Image.asset(
-                                  'images/ic_woman.png',
-                                  height: 100.0,
-                                ),
-                              )),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Male',
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ))
-                      ],
-                    ),
-                  ],
-                ),
+                PickGender(),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
@@ -126,20 +83,26 @@ class CalculatorScreen extends StatelessWidget {
                                 BorderRadius.all(Radius.circular(24.0)))),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: TextFormField(
-                    initialValue: '0',
-                    decoration: InputDecoration(
-                        labelText: 'Age (years)',
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(24.0)))),
+                Visibility(
+                  visible: isVisible,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextFormField(
+                      initialValue: '0',
+                      decoration: InputDecoration(
+                          labelText: 'Age (years)',
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(24.0)))),
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: DropdownWidget(),
+                Visibility(
+                  visible: isVisible,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: DropdownWidget(),
+                  ),
                 ),
                 Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -162,7 +125,7 @@ class CalculatorScreen extends StatelessWidget {
                               'Calculate your ',
                             ),
                             Text(
-                              'BMI',
+                              title,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -228,5 +191,87 @@ class _DropdownWidgetState extends State<DropdownWidget> {
             value: '5',
           ),
         ]);
+  }
+}
+
+class PickGender extends StatefulWidget {
+  @override
+  _PickGender createState() => _PickGender();
+}
+
+class _PickGender extends State<PickGender> {
+  bool _isMale = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 12.0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isMale = true;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: (_isMale ? primaryColor : secondaryColor),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: Image.asset(
+                      'images/ic_man.png',
+                      height: 100.0,
+                    ),
+                  )),
+            ),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Male',
+                  style: TextStyle(
+                    fontWeight: (_isMale ? FontWeight.bold : FontWeight.normal),
+                  ),
+                ))
+          ],
+        ),
+        Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 12.0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isMale = false;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: (_isMale ? secondaryColor : primaryColor),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: Image.asset(
+                      'images/ic_woman.png',
+                      height: 100.0,
+                    ),
+                  )),
+            ),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Female',
+                  style: TextStyle(
+                    fontWeight: (_isMale ? FontWeight.normal : FontWeight.bold),
+                  ),
+                ))
+          ],
+        ),
+      ],
+    );
   }
 }

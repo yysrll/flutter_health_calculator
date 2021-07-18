@@ -9,7 +9,22 @@ var primaryButtonColor = Color(0xB36C63FF);
 var title;
 var description;
 var isVisible;
+var result;
+bool _isMale = true;
+String dropdownValue = '1.2';
+final weightInput = TextEditingController(text: '0');
+final heightInput = TextEditingController(text: '0');
+final ageInput = TextEditingController(text: '0');
+var weight = int.parse(weightInput.text);
+var height = int.parse(heightInput.text);
+var age = int.parse(ageInput.text);
+
 // var isMale = true;
+class ResultData {
+  final int code;
+  final double result;
+  ResultData(this.code, this.result);
+}
 
 class CalculatorScreen extends StatelessWidget {
   final int code;
@@ -64,7 +79,7 @@ class CalculatorScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
-                    initialValue: '0',
+                    controller: weightInput,
                     decoration: InputDecoration(
                         labelText: 'Weight (kg)',
                         border: OutlineInputBorder(
@@ -75,7 +90,7 @@ class CalculatorScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
-                    initialValue: '0',
+                    controller: heightInput,
                     decoration: InputDecoration(
                         labelText: 'Height (cm)',
                         border: OutlineInputBorder(
@@ -88,7 +103,7 @@ class CalculatorScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: TextFormField(
-                      initialValue: '0',
+                      controller: ageInput,
                       decoration: InputDecoration(
                           labelText: 'Age (years)',
                           border: OutlineInputBorder(
@@ -108,9 +123,28 @@ class CalculatorScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 8.0),
                     child: ElevatedButton(
                         onPressed: () {
+                          if (code == 1) {
+                            var heightSquare = (height / 100) * (height / 100);
+                            result = weight / heightSquare;
+                          } else {
+                            if (_isMale) {
+                              result = (66.5 +
+                                      (13.7 * weight) +
+                                      (5 * height) -
+                                      (6.8 * age)) *
+                                  double.parse(dropdownValue);
+                            } else {
+                              result = (665 +
+                                      (9.6 * weight) +
+                                      (1.8 * height) -
+                                      (4.7 * age)) *
+                                  double.parse(dropdownValue);
+                            }
+                          }
+
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return SummaryScreen();
+                            return SummaryScreen(ResultData(code, result));
                           }));
                         },
                         style: ElevatedButton.styleFrom(
@@ -150,8 +184,6 @@ class DropdownWidget extends StatefulWidget {
 
 /// This is the private State class that goes with DropdownWidget.
 class _DropdownWidgetState extends State<DropdownWidget> {
-  String dropdownValue = '1';
-
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
@@ -172,23 +204,23 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         items: [
           DropdownMenuItem<String>(
             child: Text('Never/very rarely exercise'),
-            value: '1',
+            value: '1.2',
           ),
           DropdownMenuItem<String>(
             child: Text('Infrequent exercise (1-3 days a week)'),
-            value: '2',
+            value: '1.25',
           ),
           DropdownMenuItem<String>(
             child: Text('Exercising frequently (3-5 days a week)'),
-            value: '3',
+            value: '1.3',
           ),
           DropdownMenuItem<String>(
             child: Text('Exercise frequently (6-7 days a week)'),
-            value: '4',
+            value: '1.35',
           ),
           DropdownMenuItem<String>(
             child: Text('Very often do sports or do physical work everyday'),
-            value: '5',
+            value: '1.4',
           ),
         ]);
   }
@@ -200,8 +232,6 @@ class PickGender extends StatefulWidget {
 }
 
 class _PickGender extends State<PickGender> {
-  bool _isMale = true;
-
   @override
   Widget build(BuildContext context) {
     return Row(

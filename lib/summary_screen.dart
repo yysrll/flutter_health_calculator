@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kalkulator_sehat/calculator_screen.dart';
 
 var primaryColor = Color(0xFF6C63FF);
 var secondaryColor = Color(0x336C63FF);
 var primaryButtonColor = Color(0xB36C63FF);
 
 class SummaryScreen extends StatelessWidget {
+  SummaryScreen(ResultData resultData);
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +35,7 @@ class SummaryScreen extends StatelessWidget {
                       children: <Widget>[
                         Text('Your BMI is'),
                         Text(
-                          '18.83',
+                          result.toStringAsFixed(1),
                           style: TextStyle(
                               fontSize: 28.0,
                               fontWeight: FontWeight.bold,
@@ -65,10 +69,10 @@ class SummaryScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 4.0),
                           child: ElevatedButton(
                               onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return SummaryScreen();
-                                }));
+                                // Navigator.push(context,
+                                //     MaterialPageRoute(builder: (context) {
+                                //   return SummaryScreen();
+                                // }));
                               },
                               style: ElevatedButton.styleFrom(
                                   primary: primaryButtonColor,
@@ -87,10 +91,10 @@ class SummaryScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 4.0),
                           child: OutlinedButton(
                               onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return SummaryScreen();
-                                }));
+                                // Navigator.push(context,
+                                //     MaterialPageRoute(builder: (context) {
+                                //   return SummaryScreen();
+                                // }));
                               },
                               style: OutlinedButton.styleFrom(
                                   primary: primaryButtonColor,
